@@ -59,6 +59,8 @@ public class CountMethodImpl implements ICountMethod {
 			int space = 32;
 			//回车
 			int enter = 13;
+			//末尾
+			int end = -1;
 			//存放一个读到的字符
 			int judge;
 			//用于记录该单词是否满足要求
@@ -83,15 +85,16 @@ public class CountMethodImpl implements ICountMethod {
 					}
 					//得到整个单词来判断
 					//单词长度太小，不满足要求
-					if (tempWord.length() < 4) {
+					int minLength = 4;
+					if (tempWord.length() < minLength) {
 						//清零
 						tempWord.delete(0, tempWord.length());
 						continue;
 					} else {
 
-						for (int i = 1; i < 4; i++) {
+						for (int i = 1; i < minLength; i++) {
 							//读到第四个字符的时候分开判断
-							if (i == 3) {
+							if (i == minLength-1) {
 								if (judgeCharacter(tempWord.charAt(i))) {
 									//转化成String类型存入strings集合中
 									String string = tempWord.toString();
@@ -112,7 +115,7 @@ public class CountMethodImpl implements ICountMethod {
 						tempWord.delete(0, tempWord.length());
 					}
 				} else {
-					while (judge != space && judge != enter && judge != -1) {
+					while (judge != space && judge != enter && judge != end) {
 						judge = in.read();
 					}
 				}
@@ -121,16 +124,19 @@ public class CountMethodImpl implements ICountMethod {
 			return strings;
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			return strings;
 		}
+		return strings;
 	}
 
 	@Override
 	public boolean judgeCharacter(int c) {
-		if (c >= 65 && c <= 90) {
+		char a = 'a';
+		char z = 'z';
+		char A = 'A';
+		char Z = 'Z';
+		if (c >= a && c <= z) {
 			return true;
-		} else if (c >= 97 && c <= 122) {
+		} else if (c >= A && c <= Z) {
 			return true;
 		} else {
 			return false;
@@ -139,11 +145,17 @@ public class CountMethodImpl implements ICountMethod {
 
 	@Override
 	public boolean judgeBreak(int c) {
-		if (c >= 65 && c <= 90) {
+		char a = 'a';
+		char z = 'z';
+		char A = 'A';
+		char Z = 'Z';
+		char one = '1';
+		char nine = '9';
+		if (c >= a && c <= z) {
 			return false;
-		} else if (c >= 97 && c <= 122) {
+		} else if (c >= A && c <= Z) {
 			return false;
-		} else if (c > 48 && c < 57) {
+		} else if (c >= one && c <= nine) {
 			return false;
 		} else {
 			return true;
@@ -170,7 +182,7 @@ public class CountMethodImpl implements ICountMethod {
 	public List<Map.Entry<String, Integer>> countWordsFrequency(List<String> wordList) {
 		//map 作为中间转换记录 wordList 中单词出现的次数
 		//map 中的 key 保存的是单词，value 保存的是出现的次数
-		Map<String,Integer> wordMap = new HashMap<String,Integer>();
+		Map<String,Integer> wordMap = new HashMap<String,Integer>(20);
 
 		//遍历 wordList 将 wordLis 中的单词放入 worMap中，做统计
 		for(String word: wordList){

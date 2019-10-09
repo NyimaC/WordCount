@@ -30,7 +30,7 @@ public class WordCount {
 	@Test
 	public void testReadLine() {
 		try {
-			File file = new File("E:\\软工作业\\第四次结对编程\\input.txt");
+			File file = new File("E:\\软工作业\\第四次结对编程\\text.txt");
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 			int lineNumber = 0;
 			java.lang.String line = null;
@@ -49,7 +49,7 @@ public class WordCount {
 	public void countWords() {
 		//先读一个单词，再判断他是否满足要求：即：单词：至少以4个英文字母开头，跟上字母数字符号，单词以分隔符分割，不区分大小写。
 		try{
-			InputStream in = new FileInputStream("E:\\软工作业\\第四次结对编程\\input.txt");
+			InputStream in = new FileInputStream("E:\\软工作业\\第四次结对编程\\text.txt");
 			//空格
 			int space = 32;
 			//回车

@@ -7,6 +7,7 @@ import com.nyima.translate.ITranslateParameter;
  * @data 2019/10/8 19:44
  */
 public class TranslateCommandImpl implements ITranslateParameter {
+	private char space = ' ';
 	@Override
 	public String returnInFile(String cmd) {
 		//设置初始输入文件名
@@ -23,14 +24,13 @@ public class TranslateCommandImpl implements ITranslateParameter {
 			if (c == '-') {
 				c = command.charAt(++i);
 				if (c == 'i') {
-					System.out.println("读取文件");
 					//初始化输入文件名
 					inFile = "";
 					//跳过空格，读出文件名
 					++i;
 					c = command.charAt(++i);
 					//读出文件名
-					while (c != ' ') {
+					while (c != space) {
 						inFile += c;
 						if (i == length - 1) {
 							return inFile;
@@ -58,13 +58,12 @@ public class TranslateCommandImpl implements ITranslateParameter {
 			if(c == '-') {
 				c = command.charAt(++i);
 				if(c == 'o') {
-					System.out.println("写入文件");
 					//初始化输出文件名
 					outFile = "";
 					//跳过空格，读出文件名
 					++i;
 					c = command.charAt(++i);
-					while (c != ' ') {
+					while (c != space) {
 						outFile += c;
 						if(i == length-1){
 							return outFile;

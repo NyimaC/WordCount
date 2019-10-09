@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Test {
 	@org.junit.Test
 	public void testMain() {
-		//获得单词技术类对象
+		//获得单词计数类对象
 		CountMethodImpl method = new CountMethodImpl();
 		//获得输入对象，输入文件名
 		String path = "E:\\软工作业\\第四次结对编程\\text.txt";
@@ -46,10 +46,12 @@ public class Test {
 		int numberN = 0;
 		StringBuffer command = new StringBuffer();
 		//命令行指令
-		command.append("wordCount.exe -m 5 -n 3");
+		command.append("wordCount.exe -i E:\\软工作业\\第四次结对编程\\text.txt -m 6 -n 3 -o E:\\软工作业\\第四次结对编程\\output.txt");
 		//字符串长度
 		int length = command.length();
 		//遍历指令
+		//space
+		char space = ' ';
 		for(int i=0; i<length; i++) {
 			char c = command.charAt(i);
 			//如果是指令,则读出指令内容
@@ -63,7 +65,7 @@ public class Test {
 					++i;
 					c = command.charAt(++i);
 					//读出文件名
-					while(c != ' ') {
+					while(c != space) {
 						inFile += c;
 						if(i == length-1){
 							break;
@@ -78,7 +80,7 @@ public class Test {
 					//跳过空格，读出文件名
 					++i;
 					c = command.charAt(++i);
-					while (c != ' ') {
+					while (c != space) {
 						outFile += c;
 						if(i == length-1){
 							break;
@@ -106,7 +108,7 @@ public class Test {
 	@org.junit.Test
 	public void testMethod() {
 		TranslateCommandImpl translate = new TranslateCommandImpl();
-		String cmd = "wordCount.exe -i E:\\软工作业\\第四次结对编程\\text.txt -m 6 -n 3 -o E:\\软工作业\\第四次结对编程\\output.txt";
+		String cmd = "wordCount.exe -i E:\\软工作业\\第四次结对编程\\text.txt -m 7 -n 3 -o E:\\软工作业\\第四次结对编程\\output.txt";
 		String inFile = translate.returnInFile(cmd);
 		String outFile = translate.returnOutFile(cmd);
 		int m = translate.returnNumberM(cmd);
@@ -123,8 +125,7 @@ public class Test {
 	@org.junit.Test
 	public void testAll() {
 		//输入命令行
-		Scanner scanner = new Scanner(System.in);
-		String cmd = scanner.nextLine();
+		String cmd = "wordCount.exe -i E:\\软工作业\\第四次结对编程\\text.txt -m 6 -n 3 -o E:\\软工作业\\第四次结对编程\\output.txt";
 		//创建需要的对象
 		TranslateCommandImpl translate = new TranslateCommandImpl();
 		CountMethodImpl method = new CountMethodImpl();
@@ -136,7 +137,8 @@ public class Test {
 		//用于保存各种数据
 		int characters, words, lines;
 		//判断有无-i, -o指令
-		if("null".equals(inFile) || "null".equals(outFile)) {
+		String noFile = "null";
+		if(noFile.equals(inFile) || noFile.equals(outFile)) {
 			System.out.println("输入或者输出不能为空！");
 			return;
 		}
@@ -155,4 +157,5 @@ public class Test {
 		System.out.println(lines);
 		System.out.println(lengthWords);
 	}
+
 }

@@ -4,6 +4,10 @@ import com.nyima.count.impl.CountMethodImpl;
 import com.nyima.translate.impl.TranslateCommandImpl;
 import com.nyima.wirte.WriteFile;
 
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +31,20 @@ public class Main {
 		String outFile = translate.returnOutFile(cmd);
 		int numberM = translate.returnNumberM(cmd);
 		int numberN = translate.returnNumberN(cmd);
+		//能否读到文件，不能则停止
+		try {
+			InputStream in = new FileInputStream(inFile);
+		}catch (IOException e) {
+			System.out.println("文件位置有误！");
+			return;
+		}
 		//用于保存各种数据
 		int characters, words, lines;
 		//词频Map中的长度
 		int length;
 		//判断有无-i, -o指令
-		if("null".equals(inFile) || "null".equals(outFile)) {
+		String noFile = "null";
+		if(noFile.equals(inFile) || noFile.equals(outFile)) {
 			System.out.println("输入或者输出不能为空！");
 			return;
 		}
@@ -50,9 +62,10 @@ public class Main {
 		//保存定长词频
 		List<Map.Entry<String, Integer>> neededFrequency = new ArrayList<>();
 		//得到其长度，方便遍历
+		int maxLength = 10;
 		length = frequency.size();
 		//如果长度大于10，则把长度变成10
-		if(length > 10) {
+		if(length > maxLength) {
 			length = 10;
 		}
 		//打印结果

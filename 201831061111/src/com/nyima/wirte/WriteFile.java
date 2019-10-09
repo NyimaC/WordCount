@@ -12,7 +12,7 @@ import java.util.Map;
  * @data 2019/10/8 20:08
  */
 public class WriteFile {
-	public void writeFile(String outFile, int characters, int words, int lines, List<String> lengthWords, List<Map.Entry<String, Integer>> neededFrequency ) {
+	public void writeFile(String outFile, int characters, int words, int lines, List<String> lengthWords, List<Map.Entry<String, Integer>> neededFrequency) {
 		try{
 		File file = new File(outFile);
 		Writer out = new FileWriter(file);
